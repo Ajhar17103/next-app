@@ -1,5 +1,5 @@
 import Comment from "@/app/components/Comment";
-import { getCommentbyPost, getPostDetails } from "@/lib/postApi/posts";
+import { getAllPost, getCommentbyPost, getPostDetails } from "@/lib/postApi/posts";
 import Link from "next/link";
 import { Suspense } from "react";
 
@@ -57,3 +57,10 @@ export default async function asyncPostDetails({ params }) {
   );
 }
 
+// This function generates static parameters for dynamic routes at build time.
+export async function generateStaticParams() {
+	const posts = await getAllPost();
+	return posts.map((post) => ({
+	  id: post.id.toString(), // Ensure id is a string
+	}));
+}
